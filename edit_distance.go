@@ -72,22 +72,3 @@ func (e *editDistance) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 
 	return 1.0 - float64(cacheX[len(cacheX)-1])/float64(max(len(r1), len(r2)))
 }
-
-func (e *editDistance) FindBestMatch(s string, targets []string, compare Compare) *MatchResult {
-	match := make([]*Match, 0, len(targets))
-	bestIndex := 0
-	for k, s2 := range targets {
-		score := compare(s, s2)
-		match = append(match, &Match{S: s2, Score: score})
-
-		if k == 0 {
-			continue
-		}
-
-		if score > match[bestIndex].Score {
-			bestIndex = k
-		}
-	}
-
-	return &MatchResult{AllResult: match, Match: match[bestIndex], BestIndex: bestIndex}
-}
