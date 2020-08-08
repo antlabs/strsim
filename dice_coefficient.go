@@ -1,7 +1,5 @@
 package strsim
 
-import "fmt"
-
 type diceCoefficient struct{}
 
 type value struct {
@@ -10,6 +8,10 @@ type value struct {
 }
 
 func (d *diceCoefficient) CompareAscii(s1, s2 string) float64 {
+	return d.CompareUtf8(s1, s2)
+}
+
+func (d *diceCoefficient) CompareUtf8(s1, s2 string) float64 {
 	if s1 == s2 {
 		return 1.0
 	}
@@ -51,8 +53,4 @@ func (d *diceCoefficient) CompareAscii(s1, s2 string) float64 {
 	}
 
 	return 2.0 * float64(mixed) / float64(l1+l2)
-}
-
-func (d *diceCoefficient) CompareUtf8(s1, s2 string) float64 {
-	return d.CompareAscii(s1, s2)
 }
