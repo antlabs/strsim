@@ -1,10 +1,12 @@
 package strsim
 
 type option struct {
-	ignore int
+	ignore int //
+	ngram  int // dice coefficient 算法会需要用到
 	cmp    func(s1, s2 string) float64
 }
 
+// 调用Option接口设置option
 func (o *option) fillOption(opts ...Option) {
 	for _, opt := range opts {
 		opt.Apply(o)
@@ -32,11 +34,5 @@ func IgnoreCase() OptionFunc {
 func IgnoreSpace() OptionFunc {
 	return OptionFunc(func(o *option) {
 		o.ignore |= ignoreSpace
-	})
-}
-
-//使用编辑距离
-func Levdist() OptionFunc {
-	return OptionFunc(func(o *option) {
 	})
 }
