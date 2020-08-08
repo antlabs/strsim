@@ -14,7 +14,8 @@ func Test_DiceCoefficient_CompareAscii(t *testing.T) {
 		{s1: "ivan1", s2: "ivan2", cost: 0.8},
 		{s1: "love", s2: "love", cost: 1},
 	} {
-		assert.Equal(t, d.CompareAscii(v.s1.(string), v.s2.(string)), v.cost, fmt.Sprintf("error case:%d", k))
+		m := fmt.Sprintf("error case:%d", k)
+		assert.Equal(t, d.CompareAscii(v.s1.(string), v.s2.(string)), v.cost, m)
 	}
 }
 
@@ -23,7 +24,7 @@ func Test_DiceCoefficient_CompareUtf8(t *testing.T) {
 
 	for k, v := range []testOneCase{
 		{s1: "你好中国", s2: "你好中国", cost: 1},
-		{s1: "加油，来个", s2: "加油，来", cost: 0.8},
+		{s1: "加油，来个", s2: "加油，来吧", cost: 0.8},
 	} {
 		assert.Equal(t, d.CompareUtf8(v.s1.(string), v.s2.(string)), v.cost, fmt.Sprintf("error case:%d", k))
 	}

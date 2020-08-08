@@ -14,8 +14,9 @@ func Compare(s1, s2 string, opts ...Option) float64 {
 }
 
 // 返回相似度最高的那个字符串
-func FindBestMatch(s string, targets []string, opts ...Option) *similarity.MatchResult {
-	return findBestMatch(s, targets, opts...)
+func FindBestMatchOne(s string, targets []string, opts ...Option) *similarity.Match {
+	r := findBestMatch(s, targets, opts...)
+	return r.Match
 }
 
 // 比较两个字符串内部函数
@@ -35,7 +36,7 @@ func modifyStrAndCheck(o *option, s1, s2 *string) (score float64, exit bool) {
 	return check(*s1, *s2)
 }
 
-// 返回相似度最高的那个字符串，内部函数
+// 记录每个targets子串的相似度打分，并且返回相似度最高的那个字符串, 内部函数
 func findBestMatch(s string, targets []string, opts ...Option) *similarity.MatchResult {
 
 	var opt option
