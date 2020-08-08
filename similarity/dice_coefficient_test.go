@@ -8,7 +8,7 @@ import (
 )
 
 func Test_DiceCoefficient_CompareAscii(t *testing.T) {
-	d := &diceCoefficient{}
+	d := &DiceCoefficient{}
 
 	for k, v := range []testOneCase{
 		{s1: "ivan1", s2: "ivan2", cost: 0.8},
@@ -19,7 +19,7 @@ func Test_DiceCoefficient_CompareAscii(t *testing.T) {
 }
 
 func Test_DiceCoefficient_CompareUtf8(t *testing.T) {
-	d := &diceCoefficient{}
+	d := &DiceCoefficient{}
 
 	for k, v := range []testOneCase{
 		{s1: "你好中国", s2: "你好中国", cost: 1},
@@ -30,7 +30,7 @@ func Test_DiceCoefficient_CompareUtf8(t *testing.T) {
 }
 
 func Test_DiceCoefficient_FindBestMatch(t *testing.T) {
-	d := &diceCoefficient{}
+	d := &DiceCoefficient{}
 
 	for k, v := range []testBestCase{
 		{s: "白日依山尽", targets: []string{"白日依山尽", "黄河入海流", "欲穷千里目", "更上一层楼"}, bestIndex: 0},

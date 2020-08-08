@@ -1,8 +1,9 @@
 package strsim
 
 type option struct {
-	ignore int //
-	ngram  int // dice coefficient 算法会需要用到
+	ignore int  //
+	ascii  bool // 设置选用ascii还是utf8方式执行算法
+	ngram  int  // dice coefficient 算法会需要用到
 	cmp    func(s1, s2 string) float64
 }
 
@@ -11,6 +12,9 @@ func (o *option) fillOption(opts ...Option) {
 	for _, opt := range opts {
 		opt.Apply(o)
 	}
+
+	opt := Default()
+	opt.Apply(o)
 }
 
 type Option interface {
@@ -34,5 +38,12 @@ func IgnoreCase() OptionFunc {
 func IgnoreSpace() OptionFunc {
 	return OptionFunc(func(o *option) {
 		o.ignore |= ignoreSpace
+	})
+}
+
+//使用ascii编码
+func UseASCII() OptionFunc {
+	return OptionFunc(func(o *option) {
+		o.ascii = true
 	})
 }

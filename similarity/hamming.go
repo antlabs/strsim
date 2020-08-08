@@ -4,9 +4,9 @@ import (
 	"unicode/utf8"
 )
 
-type hamming struct{}
+type Hamming struct{}
 
-func (h *hamming) CompareAscii(s1, s2 string) float64 {
+func (h *Hamming) CompareAscii(s1, s2 string) float64 {
 
 	count := 0
 	l := 0
@@ -24,7 +24,7 @@ func (h *hamming) CompareAscii(s1, s2 string) float64 {
 	return 1.0 - float64(count)/float64(l)
 }
 
-func (h *hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
+func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 	count := 0
 
 	l := 0

@@ -8,7 +8,7 @@ import (
 )
 
 func Test_Hamming_CompareAscii(t *testing.T) {
-	h := hamming{}
+	h := Hamming{}
 
 	for k, v := range []testOneCase{
 		{s1: "1011101000", s2: "1001001000", cost: 0.8},
@@ -20,7 +20,7 @@ func Test_Hamming_CompareAscii(t *testing.T) {
 }
 
 func Test_Hamming_CompareUtf8(t *testing.T) {
-	h := hamming{}
+	h := Hamming{}
 
 	for k, v := range []testOneCase{
 		{s1: "中国嘿嘿", s2: "中国哈哈", cost: 0.5},

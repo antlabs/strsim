@@ -1,9 +1,9 @@
 package similarity
 
-type editDistance struct{}
+type EditDistance struct{}
 
 // ascii
-func (e *editDistance) CompareAscii(s1, s2 string) float64 {
+func (e *EditDistance) CompareAscii(s1, s2 string) float64 {
 	cacheX := make([]int, len(s2))
 
 	diagonal := 0
@@ -38,7 +38,7 @@ func (e *editDistance) CompareAscii(s1, s2 string) float64 {
 }
 
 // utf8
-func (e *editDistance) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
+func (e *EditDistance) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 	r1 := []rune(utf8Str1)
 	r2 := []rune(utf8Str2)
 	cacheX := make([]int, len(r2))

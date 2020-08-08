@@ -1,17 +1,19 @@
 package similarity
 
-type diceCoefficient struct{}
+type DiceCoefficient struct {
+	Ngram int
+}
 
 type value struct {
 	shortCount int
 	longCount  int
 }
 
-func (d *diceCoefficient) CompareAscii(s1, s2 string) float64 {
+func (d *DiceCoefficient) CompareAscii(s1, s2 string) float64 {
 	return d.CompareUtf8(s1, s2)
 }
 
-func (d *diceCoefficient) CompareUtf8(s1, s2 string) float64 {
+func (d *DiceCoefficient) CompareUtf8(s1, s2 string) float64 {
 	if s1 == s2 {
 		return 1.0
 	}
