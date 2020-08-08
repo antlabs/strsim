@@ -3,7 +3,6 @@ package strsim
 type option struct {
 	ignore int  //
 	ascii  bool // 设置选用ascii还是utf8方式执行算法
-	ngram  int  // dice coefficient 算法会需要用到
 	cmp    func(s1, s2 string) float64
 }
 

@@ -20,7 +20,7 @@ func FindBestMatch(s string, targets []string, opts ...Option) *similarity.Match
 
 // 比较两个字符串内部函数
 func compare(s1, s2 string, o *option) float64 {
-	if s, e := prevProcess(o, &s1, &s2); e {
+	if s, e := modifyStrAndCheck(o, &s1, &s2); e {
 		return s
 	}
 
@@ -28,7 +28,7 @@ func compare(s1, s2 string, o *option) float64 {
 }
 
 // 前处理主要涉及，修改字符串，和边界判断
-func prevProcess(o *option, s1, s2 *string) (score float64, exit bool) {
+func modifyStrAndCheck(o *option, s1, s2 *string) (score float64, exit bool) {
 	modifyString(o, s1)
 	modifyString(o, s2)
 
