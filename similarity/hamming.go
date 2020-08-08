@@ -1,4 +1,4 @@
-package strsim
+package similarity
 
 import (
 	"unicode/utf8"

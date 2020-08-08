@@ -1,4 +1,4 @@
-package strsim
+package similarity
 
 type editDistance struct{}
 
