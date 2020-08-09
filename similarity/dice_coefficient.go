@@ -7,6 +7,11 @@ import (
 
 type DiceCoefficient struct {
 	Ngram int
+
+	//debug use
+	l1    int
+	l2    int
+	mixed int
 }
 
 type value struct {
@@ -18,53 +23,48 @@ func (d *DiceCoefficient) CompareAscii(s1, s2 string) float64 {
 	return d.CompareUtf8(s1, s2)
 }
 
-func (d *DiceCoefficient) setOr(set map[string]value, s string, s1 bool) (mixed, l int) {
+func (d *DiceCoefficient) setOr(set map[string]value, s string, add bool) (mixed, l int) {
 	var key strings.Builder
 	ngram := d.Ngram
 	if ngram == 0 {
-		ngram = 1
+		ngram = 2
 	}
 
 	for i := 0; i < len(s); {
-		currSize := 0
-		for j, total := 0, 0; j < ngram; j++ {
+		firstSize := 0
+		for j, total := 0, 0; j < ngram && i+total < len(s); j++ {
 			r, size := utf8.DecodeRuneInString(s[i+total:])
 			key.WriteRune(r)
 			total += size
 			if j == 0 {
-				currSize = size
+				firstSize = size
 			}
 
-			if i+total >= len(s) {
-				break
+		}
+		val, ok := set[key.String()]
+		if add {
+			if !ok {
+				val = value{}
+			}
+			val.s1Count++
+		} else {
+
+			if !ok {
+				goto next
 			}
 
-			l++
-
-			val, ok := set[key.String()]
-			if s1 {
-				if !ok {
-					val = value{}
-				}
-				val.s1Count++
-			} else {
-
-				if !ok {
-					continue
-				}
-
-				val.s2Count++
-				if val.s1Count >= val.s2Count {
-					mixed++
-				}
+			val.s2Count++
+			if val.s1Count >= val.s2Count {
+				mixed++
 			}
-
-			set[key.String()] = val
-
-			key.Reset()
 		}
 
-		i += currSize
+		set[key.String()] = val
+
+	next:
+		key.Reset()
+		l++
+		i += firstSize
 	}
 
 	return mixed, l
@@ -79,5 +79,8 @@ func (d *DiceCoefficient) CompareUtf8(s1, s2 string) float64 {
 
 	mixed, l2 := d.setOr(set, s2, false)
 
+	d.l1 = l1
+	d.l2 = l2
+	d.mixed = mixed
 	return 2.0 * float64(mixed) / float64(l1+l2)
 }
