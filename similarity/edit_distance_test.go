@@ -8,9 +8,10 @@ import (
 )
 
 type testOneCase struct {
-	s1   string
-	s2   string
-	cost float64
+	s1    string
+	s2    string
+	cost  float64
+	ngram int
 }
 
 type testBestCase struct {

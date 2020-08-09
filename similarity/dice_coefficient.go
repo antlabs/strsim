@@ -8,10 +8,12 @@ import (
 type DiceCoefficient struct {
 	Ngram int
 
-	//debug use
+	//test use
 	l1    int
 	l2    int
 	mixed int
+	key   []string
+	test  bool
 }
 
 type value struct {
@@ -23,7 +25,7 @@ func (d *DiceCoefficient) CompareAscii(s1, s2 string) float64 {
 	return d.CompareUtf8(s1, s2)
 }
 
-func (d *DiceCoefficient) setOr(set map[string]value, s string, add bool) (mixed, l int) {
+func (d *DiceCoefficient) setOrGet(set map[string]value, s string, add bool) (mixed, l int) {
 	var key strings.Builder
 	ngram := d.Ngram
 	if ngram == 0 {
@@ -40,6 +42,9 @@ func (d *DiceCoefficient) setOr(set map[string]value, s string, add bool) (mixed
 				firstSize = size
 			}
 
+		}
+		if utf8.RuneCountInString(key.String()) != ngram {
+			break
 		}
 		val, ok := set[key.String()]
 		if add {
@@ -62,6 +67,10 @@ func (d *DiceCoefficient) setOr(set map[string]value, s string, add bool) (mixed
 		set[key.String()] = val
 
 	next:
+		if d.test {
+			d.key = append(d.key, key.String())
+		}
+
 		key.Reset()
 		l++
 		i += firstSize
@@ -75,9 +84,9 @@ func (d *DiceCoefficient) CompareUtf8(s1, s2 string) float64 {
 	set := make(map[string]value, len(s1)/3)
 	//TODO 边界比如字符长度小于ngram
 
-	mixed, l1 := d.setOr(set, s1, true)
+	mixed, l1 := d.setOrGet(set, s1, true)
 
-	mixed, l2 := d.setOr(set, s2, false)
+	mixed, l2 := d.setOrGet(set, s2, false)
 
 	d.l1 = l1
 	d.l2 = l2

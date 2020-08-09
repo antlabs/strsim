@@ -3,11 +3,13 @@ package similarity
 import (
 	"fmt"
 	"testing"
+	"unicode/utf8"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_DiceCoefficient_CompareAscii(t *testing.T) {
+	// ngram = 1
 	d := &DiceCoefficient{Ngram: 1}
 
 	for k, v := range []testOneCase{
@@ -18,6 +20,30 @@ func Test_DiceCoefficient_CompareAscii(t *testing.T) {
 		assert.Equal(t, d.CompareAscii(v.s1, v.s2), v.cost, m)
 		assert.Equal(t, d.l1, len(v.s1), m)
 		assert.Equal(t, d.l2, len(v.s2), m)
+	}
+
+}
+
+func Test_DiceCoefficient_CompareAscii_NgramOrMore(t *testing.T) {
+	// ngram = 2
+	d := &DiceCoefficient{Ngram: 2, test: true}
+	for k, v := range []testOneCase{
+		{s1: "John Smith", s2: "Smith, John D.", cost: 0.7272727272727273, ngram: 2},
+		{s1: "John Smith", s2: "Smith, John D.", cost: 0.6, ngram: 3},
+		{s1: "John Smith", s2: "Smith, John D.", cost: 0.4444444444444444, ngram: 4},
+	} {
+		if v.ngram != 0 {
+			d.Ngram = v.ngram
+		}
+
+		m := fmt.Sprintf("error case:%d", k)
+		assert.Equal(t, d.CompareAscii(v.s1, v.s2), v.cost, m)
+		for _, v := range d.key {
+			assert.Equal(t, utf8.RuneCountInString(v), d.Ngram, fmt.Sprintf("key is (%s)", v))
+		}
+
+		d.key = nil
+
 	}
 }
 
