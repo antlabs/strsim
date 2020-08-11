@@ -9,7 +9,11 @@ type Hamming struct{}
 func (h *Hamming) CompareAscii(s1, s2 string) float64 {
 
 	count := 0
-	l := 0
+	max := len(s1)
+	if max < len(s2) {
+		max = len(s2)
+	}
+
 	for i, j := 0, 0; i < len(s1) && j < len(s2); {
 
 		if s1[i] != s2[j] {
@@ -18,16 +22,21 @@ func (h *Hamming) CompareAscii(s1, s2 string) float64 {
 
 		i++
 		j++
-		l++
 	}
 
-	return 1.0 - float64(count)/float64(l)
+	return 1.0 - float64(count)/float64(max)
 }
 
 func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 	count := 0
 
-	l := 0
+	max := utf8.RuneCountInString(utf8Str1)
+
+	l2 := utf8.RuneCountInString(utf8Str2)
+	if max < l2 {
+		max = l2
+	}
+
 	for i, j := 0, 0; i < len(utf8Str1) && j < len(utf8Str2); {
 		size := 0
 		r1, size := utf8.DecodeRune(StringToBytes(utf8Str1[i:]))
@@ -40,8 +49,7 @@ func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 			count++
 		}
 
-		l++
 	}
 
-	return 1.0 - float64(count)/float64(l)
+	return 1.0 - float64(count)/float64(max)
 }

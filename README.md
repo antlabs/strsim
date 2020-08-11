@@ -1,0 +1,44 @@
+## strsim
+strsim是golang实现的字符串相识度库，后端集成多种算法，主要解决现有相似度库不能很好的处理中文
+
+## 构架
+![strsim.png](https://github.com/guonaihong/images/blob/master/strsim/strsim.png?raw=true)
+## 功能
+* 可以忽略空白字符
+* 可以大小写
+    ### 多种算法支持
+    * 莱文斯坦-编辑距离(Levenshtein)
+    * Hamming
+    * Dice's coefficient
+    * Jaro
+
+## 内容
+- [比较两个字符串相识度](##比较两个字符串相识度)
+- [从字符串数组里面找到相似度最高的字符串](##从数组里找到相似度最高的字符串)
+- [选择不同算法](##选择不同算法)
+    - [选择Dice's coefficient](###选择Dice's-coefficient)
+    - [选择jaro](###选择jaro)
+    - [选择Hamming](###选择Hamming)
+## 比较两个字符串相识度
+```go
+strsim.Compare("abc", "ab")
+```
+
+## 从数组里找到相似度最高的字符串
+```go
+strsim.FindBestMatchOne("海刘", []string{"白日依山尽", "黄河入海流", "欲穷千里目", "更上一层楼"})
+```
+
+## 选择不同算法
+### 选择Dice's coefficient
+```go
+strsim.Compare("abc", "ab", strsim.DiceCoefficient())
+```
+### 选择jaro
+```go
+strsim.Compare("abc", "ab", strsim.Jaro())
+```
+### 选择Hamming
+```go
+strsim.Compare("abc", "ab", strsim.Hamming())
+```

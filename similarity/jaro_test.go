@@ -17,10 +17,10 @@ func Test_Jaro_CompareAscii(t *testing.T) {
 		{s1: "DIXON", s2: "DICKSONX", cost: 0.7666666666666666},
 
 		{s1: "JELLYFISH", s2: "SMELLYFISH", cost: 0.8962962962962964},
+		{s2: "JELLYFISH", s1: "SMELLYFISH", cost: 0.8962962962962964},
 	} {
 		m := fmt.Sprintf("error case:%d", k)
 		assert.Equal(t, j.CompareAscii(v.s1, v.s2), v.cost, m)
-		fmt.Printf("m:%d, t:%d\n", j.m, j.t)
 	}
 
 }
