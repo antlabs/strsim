@@ -35,8 +35,8 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 
 	matchSet := make(map[rune][]int, len(s1)/3)
 	l1 := 0
-	for k, c := range s1 {
-		matchSet[c] = append(matchSet[c], k)
+	for _, c := range s1 {
+		matchSet[c] = append(matchSet[c], l1)
 		l1++
 	}
 
@@ -52,7 +52,7 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 		}
 	}()
 
-	for s2Index, c := range s2 {
+	for _, c := range s2 {
 		indexs, ok := matchSet[c]
 		l2++
 		if !ok {
@@ -64,7 +64,7 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 				continue
 			}
 
-			if math.Abs(float64(s2Index-i)) <= float64(mw) {
+			if math.Abs(float64(l2-1-i)) <= float64(mw) {
 				m++
 
 				currCheck := checkPool.Get().(*check)
@@ -82,6 +82,10 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 	}
 
 	m2 := float64(m)
+
+	if m2 == 0 {
+		return 0.0
+	}
 
 	sort.Slice(indexAndRune1, func(i, j int) bool {
 		return indexAndRune1[i].index < indexAndRune1[j].index

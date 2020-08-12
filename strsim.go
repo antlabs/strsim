@@ -8,7 +8,7 @@ import (
 func Compare(s1, s2 string, opts ...Option) float64 {
 	var o option
 
-	o.fillOption()
+	o.fillOption(opts...)
 
 	return compare(s1, s2, &o)
 }
