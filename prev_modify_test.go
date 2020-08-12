@@ -8,6 +8,11 @@ import (
 type testCase struct {
 	test string
 	need string
+	arg1 string
+	arg2 string
+	got  float64
+
+	opt Option
 }
 
 func Test_ModifyString(t *testing.T) {
