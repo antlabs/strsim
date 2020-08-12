@@ -1,5 +1,7 @@
 ## strsim
 strsim是golang实现的字符串相识度库，后端集成多种算法，主要解决现有相似度库不能很好的处理中文
+[![Go](https://github.com/antlabs/strsim/workflows/Go/badge.svg)](https://github.com/antlabs/strsim/actions)
+[![codecov](https://codecov.io/gh/antlabs/strsim/branch/master/graph/badge.svg)](https://codecov.io/gh/antlabs/strsim)
 
 ## 构架
 ![strsim.png](https://github.com/guonaihong/images/blob/master/strsim/strsim.png?raw=true)
