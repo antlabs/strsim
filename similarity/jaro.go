@@ -1,6 +1,7 @@
 package similarity
 
 import (
+	"fmt"
 	"math"
 	"sort"
 	"sync"
@@ -64,6 +65,7 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 				continue
 			}
 
+			//fmt.Printf("_______c %c:%d:%d\n", c, l2-1-i, mw)
 			if math.Abs(float64(l2-1-i)) <= float64(mw) {
 				m++
 
@@ -83,6 +85,7 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 
 	m2 := float64(m)
 
+	fmt.Printf("m2:%f\n", m2)
 	if m2 == 0 {
 		return 0.0
 	}

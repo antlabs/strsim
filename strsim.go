@@ -1,6 +1,8 @@
 package strsim
 
 import (
+	"fmt"
+
 	"github.com/antlabs/strsim/similarity"
 )
 
@@ -40,7 +42,7 @@ func modifyStrAndCheck(o *option, s1, s2 *string) (score float64, exit bool) {
 func findBestMatch(s string, targets []string, opts ...Option) *similarity.MatchResult {
 
 	var opt option
-	opt.fillOption()
+	opt.fillOption(opts...)
 
 	match := make([]*similarity.Match, 0, len(targets))
 	bestIndex := 0
@@ -48,6 +50,7 @@ func findBestMatch(s string, targets []string, opts ...Option) *similarity.Match
 
 		score := compare(s, s2, &opt)
 
+		fmt.Printf("score:%f(%s)(%s)\n", score, s, s2)
 		match = append(match, &similarity.Match{S: s2, Score: score})
 
 		if k == 0 {

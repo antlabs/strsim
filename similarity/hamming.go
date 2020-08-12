@@ -1,6 +1,7 @@
 package similarity
 
 import (
+	"math"
 	"unicode/utf8"
 )
 
@@ -24,13 +25,14 @@ func (h *Hamming) CompareAscii(s1, s2 string) float64 {
 		j++
 	}
 
-	return 1.0 - float64(count)/float64(max)
+	return 1 - (float64(count)+math.Abs(float64(len(s1)-len(s2))))/float64(max)
 }
 
 func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 	count := 0
 
-	max := utf8.RuneCountInString(utf8Str1)
+	l1 := utf8.RuneCountInString(utf8Str1)
+	max := l1
 
 	l2 := utf8.RuneCountInString(utf8Str2)
 	if max < l2 {
@@ -51,5 +53,5 @@ func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 
 	}
 
-	return float64(count) / float64(max)
+	return 1 - (float64(count)+math.Abs(float64(l1-l2)))/float64(max)
 }
