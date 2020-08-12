@@ -1,6 +1,8 @@
 package strsim
 
-import "strings"
+import (
+	"strings"
+)
 
 const (
 	ignoreCase = 1 << iota
@@ -21,7 +23,7 @@ var modiyTab = map[int]func(s *string){
 }
 
 func modifyString(o *option, s *string) {
-	for i := 0; i <= ignoreCase; i <<= 1 {
+	for i := 1; i <= ignoreSpace; i <<= 1 {
 		if i&o.ignore > 0 {
 			modiyTab[i](s)
 		}

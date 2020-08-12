@@ -51,5 +51,5 @@ func (h *Hamming) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 
 	}
 
-	return 1.0 - float64(count)/float64(max)
+	return float64(count) / float64(max)
 }
