@@ -1,6 +1,9 @@
 package similarity
 
-type EditDistance struct{}
+type EditDistance struct {
+	// test use
+	mixed int
+}
 
 // ascii
 func (e *EditDistance) CompareAscii(s1, s2 string) float64 {
@@ -11,7 +14,9 @@ func (e *EditDistance) CompareAscii(s1, s2 string) float64 {
 		for x, xLen := 0, len(cacheX); x < xLen; x++ {
 			on := x + 1
 			left := y + 1
-			if y == 0 {
+			if x == 0 {
+				diagonal = y
+			} else if y == 0 {
 				diagonal = x
 			}
 			if y > 0 {
@@ -29,11 +34,13 @@ func (e *EditDistance) CompareAscii(s1, s2 string) float64 {
 			oldDiagonal := cacheX[x]
 			cacheX[x] = min(min(on+1, left+1), same+diagonal)
 			diagonal = oldDiagonal
-			//fmt.Printf("left:%d on:%d diagonal:%d (min:%d)#", on, left, diagonal, cacheX[x])
+			//fmt.Printf("left:%d on:%d diagonal:%d (min:%d)#", left, on, oldDiagonal, cacheX[x])
 
 		}
+		//fmt.Println()
 	}
 
+	e.mixed = cacheX[len(cacheX)-1]
 	return 1.0 - float64(cacheX[len(cacheX)-1])/float64(max(len(s1), len(s2)))
 }
 
@@ -48,7 +55,9 @@ func (e *EditDistance) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 		for x, xLen := 0, len(cacheX); x < xLen; x++ {
 			on := x + 1
 			left := y + 1
-			if y == 0 {
+			if x == 0 {
+				diagonal = y
+			} else if y == 0 {
 				diagonal = x
 			}
 			if y > 0 {
@@ -70,5 +79,6 @@ func (e *EditDistance) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 		}
 	}
 
+	e.mixed = cacheX[len(cacheX)-1]
 	return 1.0 - float64(cacheX[len(cacheX)-1])/float64(max(len(r1), len(r2)))
 }

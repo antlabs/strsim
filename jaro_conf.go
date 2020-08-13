@@ -5,9 +5,13 @@ import (
 )
 
 // ngram 是筛子系数需要用的一个值
-func Jaro() OptionFunc {
+func Jaro(matchWindow ...int) OptionFunc {
 	return OptionFunc(func(o *option) {
-		d := &similarity.Jaro{}
+		mw := 0
+		if len(matchWindow) > 0 {
+			mw = matchWindow[0]
+		}
+		d := &similarity.Jaro{MatchWindow: mw}
 		o.cmp = d.CompareUtf8
 	})
 }

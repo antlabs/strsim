@@ -1,7 +1,6 @@
 package similarity
 
 import (
-	"fmt"
 	"math"
 	"sort"
 	"sync"
@@ -9,10 +8,10 @@ import (
 )
 
 type Jaro struct {
+	MatchWindow int
 	// test use
-	mw int
-	m  int
-	t  int
+	m int
+	t int
 }
 
 type check struct {
@@ -32,6 +31,10 @@ func (j *Jaro) CompareAscii(s1, s2 string) float64 {
 
 func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 	mw := max(utf8.RuneCountInString(s1), utf8.RuneCountInString(s2))/2 - 1
+	if j.MatchWindow != 0 {
+		mw = j.MatchWindow
+	}
+
 	m := 0
 
 	matchSet := make(map[rune][]int, len(s1)/3)
@@ -85,7 +88,6 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 
 	m2 := float64(m)
 
-	fmt.Printf("m2:%f\n", m2)
 	if m2 == 0 {
 		return 0.0
 	}
@@ -100,7 +102,7 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 		}
 	}
 
-	j.mw = mw
+	j.MatchWindow = mw
 	j.m = m
 	j.t = t
 	return 1.0 / 3.0 * (m2/float64(l1) + m2/float64(l2) + (m2-float64(t)/2.0)/m2)

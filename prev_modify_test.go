@@ -10,7 +10,7 @@ type testCase struct {
 	need string
 	arg1 string
 	arg2 string
-	got  float64
+	sim  float64
 
 	opt Option
 }

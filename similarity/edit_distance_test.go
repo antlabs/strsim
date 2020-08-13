@@ -12,6 +12,7 @@ type testOneCase struct {
 	s2    string
 	cost  float64
 	ngram int
+	mixed int
 }
 
 type testBestCase struct {
@@ -24,10 +25,19 @@ func Test_EditDistance_CompareAscii(t *testing.T) {
 	e := &EditDistance{}
 
 	for k, v := range []testOneCase{
-		{s1: "ivan1", s2: "ivan2", cost: 0.8},
-		{s1: "love", s2: "love", cost: 1},
+		{s1: "ivan1", s2: "ivan2", cost: 0.8, mixed: 1},
+		{s1: "love", s2: "love", cost: 1, mixed: 0},
+		{s1: "kitten", s2: "sitting", cost: 1 - 3/7.0, mixed: 3},
+		{s1: "12", s2: "1", cost: 0.5, mixed: 1},
+		{s1: "1", s2: "12", cost: 0.5, mixed: 1},
+		{s1: "123", s2: "1", cost: 0.33333333333333337, mixed: 2},
+		{s1: "1", s2: "123", cost: 0.33333333333333337, mixed: 2},
+		{s1: "1234", s2: "1", cost: 0.25, mixed: 3},
+		{s1: "1", s2: "1234", cost: 0.25, mixed: 3},
 	} {
-		assert.Equal(t, e.CompareAscii(v.s1, v.s2), v.cost, fmt.Sprintf("error case:%d", k))
+		s := e.CompareAscii(v.s1, v.s2)
+		assert.Equal(t, s, v.cost, fmt.Sprintf("cost:error case:%d", k))
+		assert.Equal(t, e.mixed, v.mixed, fmt.Sprintf("mixed:error case:%d", k))
 	}
 }
 
@@ -35,10 +45,20 @@ func Test_EditDistance_CompareUtf8(t *testing.T) {
 	e := &EditDistance{}
 
 	for k, v := range []testOneCase{
-		{s1: "你好中国", s2: "你好中国", cost: 1},
-		{s1: "加油，来个", s2: "加油，来", cost: 0.8},
+		{s1: "你好中国", s2: "你好中国", cost: 1, mixed: 0},
+		{s1: "加油，来个", s2: "加油，来", cost: 0.8, mixed: 1},
+		{s1: "一二三三四五", s2: "六二三三二五七", cost: 1 - 3/7.0, mixed: 3},
+		{s1: "一二", s2: "一", cost: 0.5, mixed: 1},
+		{s1: "一", s2: "一二", cost: 0.5, mixed: 1},
+		{s1: "一二三", s2: "一", cost: 0.33333333333333337, mixed: 2},
+		{s1: "一", s2: "一二三", cost: 0.33333333333333337, mixed: 2},
+		{s1: "一二三四", s2: "一", cost: 0.25, mixed: 3},
+		{s1: "一", s2: "一二三四", cost: 0.25, mixed: 3},
+		{s1: "中文也被称为华文、汉文。中文（汉语）有标准语和方言之分，其标准语即汉语普通话", s2: "方块", cost: 0.02631578947368418, mixed: 37},
 	} {
-		assert.Equal(t, e.CompareUtf8(v.s1, v.s2), v.cost, fmt.Sprintf("error case:%d", k))
+		s := e.CompareUtf8(v.s1, v.s2)
+		assert.Equal(t, s, v.cost, fmt.Sprintf("cost:error case:%d", k))
+		assert.Equal(t, e.mixed, v.mixed, fmt.Sprintf("mixed:error case:%d", k))
 	}
 }
 

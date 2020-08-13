@@ -21,6 +21,7 @@ func Test_Jaro_CompareAscii(t *testing.T) {
 	} {
 		m := fmt.Sprintf("error case:%d", k)
 		assert.Equal(t, j.CompareAscii(v.s1, v.s2), v.cost, m)
+		j.MatchWindow = 0
 	}
 
 }
@@ -31,9 +32,11 @@ func Test_Jaro_CompareUtf8(t *testing.T) {
 	for k, v := range []testOneCase{
 
 		{s1: "二一三四五", s2: "一二五四", cost: 0.6722222222222222},
+		{s2: "二一三四五", s1: "一二五四", cost: 0.6722222222222222},
 	} {
 		m := fmt.Sprintf("error case:%d", k)
 		assert.Equal(t, j.CompareUtf8(v.s1, v.s2), v.cost, m)
+		j.MatchWindow = 0
 	}
 
 }

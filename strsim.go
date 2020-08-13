@@ -1,8 +1,6 @@
 package strsim
 
 import (
-	"fmt"
-
 	"github.com/antlabs/strsim/similarity"
 )
 
@@ -50,7 +48,7 @@ func findBestMatch(s string, targets []string, opts ...Option) *similarity.Match
 
 		score := compare(s, s2, &opt)
 
-		fmt.Printf("score:%f(%s)(%s)\n", score, s, s2)
+		//fmt.Printf("score:%f(%s)(%s)\n", score, s, s2)
 		match = append(match, &similarity.Match{S: s2, Score: score})
 
 		if k == 0 {

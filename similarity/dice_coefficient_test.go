@@ -14,6 +14,8 @@ func Test_DiceCoefficient_CompareAscii(t *testing.T) {
 
 	for k, v := range []testOneCase{
 		{s1: "ivan1", s2: "ivan2", cost: 0.8},
+		{s2: "ivan1", s1: "ivan2", cost: 0.8},
+
 		{s1: "love", s2: "love", cost: 1},
 	} {
 		m := fmt.Sprintf("error case:%d", k)
@@ -29,8 +31,13 @@ func Test_DiceCoefficient_CompareAscii_NgramOrMore(t *testing.T) {
 	d := &DiceCoefficient{Ngram: 2, test: true}
 	for k, v := range []testOneCase{
 		{s1: "John Smith", s2: "Smith, John D.", cost: 0.7272727272727273, ngram: 2},
+		{s2: "John Smith", s1: "Smith, John D.", cost: 0.7272727272727273, ngram: 2},
+
 		{s1: "John Smith", s2: "Smith, John D.", cost: 0.6, ngram: 3},
+		{s2: "John Smith", s1: "Smith, John D.", cost: 0.6, ngram: 3},
+
 		{s1: "John Smith", s2: "Smith, John D.", cost: 0.4444444444444444, ngram: 4},
+		{s2: "John Smith", s1: "Smith, John D.", cost: 0.4444444444444444, ngram: 4},
 	} {
 		if v.ngram != 0 {
 			d.Ngram = v.ngram
