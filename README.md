@@ -16,13 +16,13 @@ strsim是golang实现的字符串相识度库，后端集成多种算法，主�
     * Jaro
 
 ## 内容
-- [比较两个字符串相识度](##比较两个字符串相识度)
-- [从字符串数组里面找到相似度最高的字符串](##从数组里找到相似度最高的字符串)
+- [比较两个字符串相识度](#比较两个字符串相识度)
+- [从字符串数组里面找到相似度最高的字符串](#从数组里找到相似度最高的字符串)
 - [选择不同算法](##选择不同算法)
-    - [莱文斯坦-编辑距离(Levenshtein)](###莱文斯坦-编辑距离(Levenshtein))
-    - [选择Dice's coefficient](###选择Dice's-coefficient)
-    - [选择jaro](###选择jaro)
-    - [选择Hamming](###选择Hamming)
+    - [莱文斯坦-编辑距离(Levenshtein)](#莱文斯坦-编辑距离(Levenshtein))
+    - [选择Dice's coefficient](#选择Dice's-coefficient)
+    - [选择jaro](#选择jaro)
+    - [选择Hamming](#选择Hamming)
 ## 比较两个字符串相识度
 ```go
 strsim.Compare("abc", "ab")
