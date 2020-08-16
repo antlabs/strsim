@@ -13,6 +13,7 @@ type testOneCase struct {
 	cost  float64
 	ngram int
 	mixed int
+	match int
 }
 
 type testBestCase struct {

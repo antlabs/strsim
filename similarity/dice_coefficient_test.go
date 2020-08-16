@@ -59,9 +59,11 @@ func Test_DiceCoefficient_CompareUtf8(t *testing.T) {
 
 	for k, v := range []testOneCase{
 		{s1: "你好中国", s2: "你好中国", cost: 1},
+		{s1: "中文也被称为华文、汉文。中文（汉语）有标准语和方言之分，其标准语即汉语普通话", s2: "方块", cost: 0.05},
 		{s1: "加油，来个", s2: "加油，来吧", cost: 0.8},
 	} {
 		assert.Equal(t, d.CompareUtf8(v.s1, v.s2), v.cost, fmt.Sprintf("error case:%d", k))
+		//fmt.Printf("mixed:%d, l1:%d, l2:%d, l1:%d\n", d.mixed, d.l1, d.l2, utf8.RuneCountInString(v.s1))
 	}
 }
 

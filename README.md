@@ -37,10 +37,12 @@ strsim.FindBestMatchOne("海刘", []string{"白日依山尽", "黄河入海流",
 ### 莱文斯坦-编辑距离(Levenshtein)
 ```go
 strsim.Compare("abc", "ab")
+// -> 0.6666666666666667
 ```
 ### 选择Dice's coefficient
 ```go
 strsim.Compare("abc", "ab", strsim.DiceCoefficient())
+//-> 0.6666666666666666
 ```
 ### 选择jaro
 ```go

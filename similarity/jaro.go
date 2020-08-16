@@ -10,8 +10,9 @@ import (
 type Jaro struct {
 	MatchWindow int
 	// test use
-	m int
-	t int
+	mw int
+	m  int
+	t  int
 }
 
 type check struct {
@@ -102,8 +103,9 @@ func (j *Jaro) CompareUtf8(s1, s2 string) float64 {
 		}
 	}
 
-	j.MatchWindow = mw
+	j.mw = mw
 	j.m = m
 	j.t = t
+	//fmt.Printf("l1:%d, l2:%d, m:%d, t:%d\n", l1, l2, m, t)
 	return 1.0 / 3.0 * (m2/float64(l1) + m2/float64(l2) + (m2-float64(t)/2.0)/m2)
 }
