@@ -45,3 +45,18 @@ func Test_FindBestMatchOne(t *testing.T) {
 		}
 	}
 }
+
+func Test_FindBestMatch(t *testing.T) {
+	for _, d := range []bestTest{
+		{best: []string{"朝辞白帝彩云间", "千里江陵一日还", "两岸猿声啼不住", "轻舟已过万重山"}, key: "千里还", need: "千里江陵一日还"},
+	} {
+		for _, o := range []Option{
+			DiceCoefficient(1),
+			Jaro(),
+			Default(),
+		} {
+			m := FindBestMatch(d.key, d.best, o)
+			assert.Equal(t, m.Match.S, d.need)
+		}
+	}
+}
