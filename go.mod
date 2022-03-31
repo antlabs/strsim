@@ -1,4 +1,4 @@
-module github.com/antlabs/strsim
+module github.com/csh0101/strsim
 
 go 1.14
 
