@@ -58,3 +58,5 @@ strsim.Compare("abc", "ab", strsim.Jaro())
 ```go
 strsim.Compare("abc", "ab", strsim.Hamming())
 ```
+
+
