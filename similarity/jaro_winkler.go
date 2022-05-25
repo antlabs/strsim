@@ -98,7 +98,7 @@ func (j *JaroWinkler) CompareUtf8(s1, s2 string) float64 {
 	//fmt.Printf("l1:%d, l2:%d, m:%d, t:%d\n", l1, l2, m, t)
 	// s1 和 s2 的相同前缀长度
 	prefixLength := 0
-	for i := 0; i < len(s1); i++ {
+	for i := 0; i < min(len(s1), len(s2)); i++ {
 		if s1[i] != s2[i] {
 			break
 		}
@@ -107,7 +107,6 @@ func (j *JaroWinkler) CompareUtf8(s1, s2 string) float64 {
 		} else {
 			break
 		}
-
 	}
 	// 影响因子 p 取值范围[0.1，0.25]，默认值为0.1
 	p := 0.1
