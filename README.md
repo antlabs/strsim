@@ -69,7 +69,7 @@ strsim.Compare("abc", "ab", strsim.DiceCoefficient())
 ```go
 strsim.Compare("abc", "ab", strsim.Jaro())
 ```
-### 选择 JaroWinkler 
+### 选择JaroWinkler 
 
 ```go
 strsim.Compare("abc", "ab", strsim.JaroWinkler())

@@ -39,8 +39,8 @@ func Base64Encode(s string) string {
 }
 
 // StrToStrs 字符串转化字符数组
-func StrToStrs(s string) []string {
-	base := make([]string, 0)
+func StrToStrs(s string, lenth int) []string {
+	base := make([]string, lenth)
 	for i := 0; i < len(s); i++ {
 		base = append(base, string(s[i]))
 	}
