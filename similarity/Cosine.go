@@ -16,10 +16,13 @@ func (c Cosine) CompareAscii(s1, s2 string) float64 {
 func (c Cosine) CompareUtf8(utf8Str1, utf8Str2 string) float64 {
 	l1 := utf8.RuneCountInString(utf8Str1)
 	l2 := utf8.RuneCountInString(utf8Str2)
-	dirts1 := make(map[string]int, l1)
-	dirts2 := make(map[string]int, l2)
+	//l1 := len(utf8Str1)
+	//l2 := len(utf8Str2)
+	l3 := utf8.RuneCountInString(base64Table)
+	dirts1 := make(map[string]int, l3)
+	dirts2 := make(map[string]int, l3)
 	// 将base64Table转化成[]string
-	base64 := StrToStrs(base64Table, utf8.RuneCountInString(base64Table))
+	base64 := StrToStrs(base64Table, l3)
 	// 遍历base64对dirts1和dirts2进行初始化
 	for _, v := range base64 {
 		dirts1[v] = 0
