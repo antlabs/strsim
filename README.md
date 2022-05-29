@@ -26,9 +26,10 @@ go get -u github.com/antlabs/strsim
     * 莱文斯坦-编辑距离(Levenshtein)
     * Hamming
     * Dice's coefficient
-    * Jaro
-    *  JaroWinkler 
-    * Cosine similarity algorithm
+    * Jaro 
+    * JaroWinkler 
+    * Cosine 
+    * Simhash
 
 ## 内容
 - [比较两个字符串相识度](#比较两个字符串相识度)
@@ -39,6 +40,9 @@ go get -u github.com/antlabs/strsim
     - [选择Dice's coefficient](#选择Dice's-coefficient)
     - [选择jaro](#选择jaro)
     - [选择Hamming](#选择Hamming)
+    - [选择JaroWinkler](#选择JaroWinkler)
+    - [选择Cosine](#选择Cosine)
+    - [选择Simhash](#选择Simhash)
 ## 比较两个字符串相识度
 ```go
 strsim.Compare("中国人", "中")
@@ -84,5 +88,11 @@ strsim.Compare("abc", "ab", strsim.Hamming())
 
 ```go
 strsim.Compare("abc", "ab", strsim.Cosine())
+```
+
+### 选择Simhash
+
+```go
+strsim.Compare("abc", "ab", strsim.Simhash())
 ```
 

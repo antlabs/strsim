@@ -9,7 +9,7 @@ func JaroWinkler(matchWindow ...int) OptionFunc {
 		if len(matchWindow) > 0 {
 			mw = matchWindow[0]
 		}
-		d := &similarity.Jaro{MatchWindow: mw}
+		d := &similarity.JaroWinkler{MatchWindow: mw}
 		o.cmp = d.CompareUtf8
 	})
 }

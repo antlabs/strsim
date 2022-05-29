@@ -18,6 +18,9 @@ func Test_Compare_Special(t *testing.T) {
 			Jaro(),
 			DiceCoefficient(1),
 			Hamming(),
+			Simhash(),
+			Cosine(),
+			JaroWinkler(),
 		} {
 			sim := Compare(v.arg1, v.arg2, o)
 			assert.Equal(t, v.sim, sim)
@@ -39,6 +42,9 @@ func Test_FindBestMatchOne(t *testing.T) {
 			DiceCoefficient(1),
 			Jaro(),
 			Default(),
+			Simhash(),
+			Cosine(),
+			JaroWinkler(),
 		} {
 			m := FindBestMatchOne(d.key, d.best, o)
 			assert.Equal(t, m.S, d.need)
@@ -54,6 +60,9 @@ func Test_FindBestMatch(t *testing.T) {
 			DiceCoefficient(1),
 			Jaro(),
 			Default(),
+			Simhash(),
+			Cosine(),
+			JaroWinkler(),
 		} {
 			m := FindBestMatch(d.key, d.best, o)
 			assert.Equal(t, m.Match.S, d.need)

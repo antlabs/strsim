@@ -20,6 +20,8 @@ func Test_ModifyString(t *testing.T) {
 
 	o.ignore |= ignoreCase
 	o.ignore |= ignoreSpace
+	o.base64 = true
+
 	for _, v := range []testCase{
 		{
 			test: "hello world",
