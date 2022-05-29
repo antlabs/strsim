@@ -88,47 +88,26 @@ func hashcodeAndAdd(counts map[string]int) [][]int {
 		////计算每一个字符串的hash
 		//for i := 0; i < len(h1); i++ {
 		// 出现的次数除以5
+		c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
+		// 将字符串转换为数字数组
+		cs := Int32StrToInts(c)
 		if v <= c1/5.0 {
-			c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
-			// 将字符串转换为数字数组
-			cs := Int32StrToInts(c)
 			// 加权
 			h1[j] = Add(cs, 1)
-
 		} else if v <= c1/5.0*2 {
-			c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
-			// 将字符串转换为数字数组
-			cs := Int32StrToInts(c)
 			// 加权
 			h1[j] = Add(cs, 2)
-
 		} else if v <= c1/5.0*3 {
-			c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
-			// 将字符串转换为数字数组
-			cs := Int32StrToInts(c)
 			// 加权
 			h1[j] = Add(cs, 3)
-
 		} else if v <= c1/5.0*4 {
-			c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
-			// 将字符串转换为数字数组
-			cs := Int32StrToInts(c)
 			// 加权
 			h1[j] = Add(cs, 4)
-
 		} else {
-			c := strconv.FormatUint(uint64(crc32.ChecksumIEEE([]byte(k))), 2)
-			// 将字符串转换为数字数组
-			cs := Int32StrToInts(c)
 			// 加权
 			h1[j] = Add(cs, 5)
-
 		}
 		j++
-		//}
-
-		//}
-
 	}
 
 	return h1

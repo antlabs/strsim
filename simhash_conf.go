@@ -4,11 +4,13 @@ import "github.com/antlabs/strsim/similarity"
 
 func Simhash() OptionFunc {
 	return OptionFunc(func(o *option) {
-		h := &similarity.Simhash{}
-		o.base64 = true
-		o.cmp = h.CompareUtf8
-		if o.ascii {
-			o.cmp = h.CompareAscii
+		if o.cmp == nil {
+			l := similarity.Simhash{}
+			o.base64 = true
+			o.cmp = l.CompareUtf8
+			if o.ascii {
+				o.cmp = l.CompareAscii
+			}
 		}
 	})
 
