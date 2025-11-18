@@ -1,10 +1,7 @@
 package similarity
 
 import (
-	"fmt"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 type testOneCase struct {
@@ -37,8 +34,12 @@ func Test_EditDistance_CompareAscii(t *testing.T) {
 		{s1: "1", s2: "1234", cost: 0.25, mixed: 3},
 	} {
 		s := e.CompareAscii(v.s1, v.s2)
-		assert.Equal(t, s, v.cost, fmt.Sprintf("cost:error case:%d", k))
-		assert.Equal(t, e.mixed, v.mixed, fmt.Sprintf("mixed:error case:%d", k))
+		if s != v.cost {
+			t.Fatalf("cost:error case:%d: got %v, want %v", k, s, v.cost)
+		}
+		if e.mixed != v.mixed {
+			t.Fatalf("mixed:error case:%d: got %v, want %v", k, e.mixed, v.mixed)
+		}
 	}
 }
 
@@ -58,8 +59,12 @@ func Test_EditDistance_CompareUtf8(t *testing.T) {
 		{s1: "中文也被称为华文、汉文。中文（汉语）有标准语和方言之分，其标准语即汉语普通话", s2: "方块", cost: 0.02631578947368418, mixed: 37},
 	} {
 		s := e.CompareUtf8(v.s1, v.s2)
-		assert.Equal(t, s, v.cost, fmt.Sprintf("cost:error case:%d", k))
-		assert.Equal(t, e.mixed, v.mixed, fmt.Sprintf("mixed:error case:%d", k))
+		if s != v.cost {
+			t.Fatalf("cost:error case:%d: got %v, want %v", k, s, v.cost)
+		}
+		if e.mixed != v.mixed {
+			t.Fatalf("mixed:error case:%d: got %v, want %v", k, e.mixed, v.mixed)
+		}
 	}
 }
 
@@ -75,6 +80,8 @@ func Test_EditDistance_FindBestMatch(t *testing.T) {
 		{s: "海刘", targets: []string{"白日依山尽", "黄河入海流", "欲穷千里目", "更上一层楼"}, bestIndex: 1},
 	} {
 		mr := findBestMatch(v.s, v.targets, e.CompareUtf8)
-		assert.Equal(t, mr.BestIndex, v.bestIndex, fmt.Sprintf("error case:%d", k))
+		if mr.BestIndex != v.bestIndex {
+			t.Fatalf("error case:%d: got bestIndex=%v, want %v", k, mr.BestIndex, v.bestIndex)
+		}
 	}
 }

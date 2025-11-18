@@ -2,8 +2,6 @@ package strsim
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func Test_Compare_Special(t *testing.T) {
@@ -23,7 +21,9 @@ func Test_Compare_Special(t *testing.T) {
 			JaroWinkler(),
 		} {
 			sim := Compare(v.arg1, v.arg2, o)
-			assert.Equal(t, v.sim, sim)
+			if sim != v.sim {
+				t.Fatalf("Compare(%q, %q) with option: got %v, want %v", v.arg1, v.arg2, sim, v.sim)
+			}
 		}
 	}
 }
@@ -47,7 +47,9 @@ func Test_FindBestMatchOne(t *testing.T) {
 			JaroWinkler(),
 		} {
 			m := FindBestMatchOne(d.key, d.best, o)
-			assert.Equal(t, m.S, d.need)
+			if m.S != d.need {
+				t.Fatalf("FindBestMatchOne(%q, %v) with option: got %q, want %q", d.key, d.best, m.S, d.need)
+			}
 		}
 	}
 }
@@ -65,7 +67,9 @@ func Test_FindBestMatch(t *testing.T) {
 			JaroWinkler(),
 		} {
 			m := FindBestMatch(d.key, d.best, o)
-			assert.Equal(t, m.Match.S, d.need)
+			if m.Match.S != d.need {
+				t.Fatalf("FindBestMatch(%q, %v) with option: got %q, want %q", d.key, d.best, m.Match.S, d.need)
+			}
 		}
 	}
 }

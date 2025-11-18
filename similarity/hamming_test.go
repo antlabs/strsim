@@ -1,10 +1,7 @@
 package similarity
 
 import (
-	"fmt"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func Test_Hamming_CompareAscii(t *testing.T) {
@@ -16,7 +13,10 @@ func Test_Hamming_CompareAscii(t *testing.T) {
 		{s1: "toned", s2: "roses", cost: 0.4},
 		{s1: "1", s2: "12", cost: 0.5},
 	} {
-		assert.Equal(t, h.CompareAscii(v.s1, v.s2), v.cost, fmt.Sprintf("error case:%d", k))
+		got := h.CompareAscii(v.s1, v.s2)
+		if got != v.cost {
+			t.Fatalf("error case:%d: got %v, want %v", k, got, v.cost)
+		}
 	}
 }
 
@@ -28,6 +28,9 @@ func Test_Hamming_CompareUtf8(t *testing.T) {
 		{s1: "中国嘿嘿1", s2: "中国哈哈", cost: 0.4},
 		{s1: "中国哈哈", s2: "中国嘿嘿1", cost: 0.4},
 	} {
-		assert.Equal(t, h.CompareUtf8(v.s1, v.s2), v.cost, fmt.Sprintf("error case:%d", k))
+		got := h.CompareUtf8(v.s1, v.s2)
+		if got != v.cost {
+			t.Fatalf("error case:%d: got %v, want %v", k, got, v.cost)
+		}
 	}
 }

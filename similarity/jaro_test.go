@@ -3,8 +3,6 @@ package similarity
 import (
 	"fmt"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func Test_Jaro_CompareAscii(t *testing.T) {
@@ -20,7 +18,10 @@ func Test_Jaro_CompareAscii(t *testing.T) {
 		{s2: "JELLYFISH", s1: "SMELLYFISH", cost: 0.8962962962962964},
 	} {
 		m := fmt.Sprintf("error case:%d", k)
-		assert.Equal(t, j.CompareAscii(v.s1, v.s2), v.cost, m)
+		got := j.CompareAscii(v.s1, v.s2)
+		if got != v.cost {
+			t.Fatalf("%s: got %v, want %v", m, got, v.cost)
+		}
 		j.MatchWindow = 0
 	}
 
@@ -37,7 +38,10 @@ func Test_Jaro_CompareUtf8(t *testing.T) {
 		{s1: "中文也被称为华文、汉文。中文（汉语）有标准语和方言之分，其标准语即汉语普通话", s2: "中文", cost: 0.6842105263157894, match: 1},
 	} {
 		m := fmt.Sprintf("error case:%d", k)
-		assert.Equal(t, j.CompareUtf8(v.s1, v.s2), v.cost, m)
+		got := j.CompareUtf8(v.s1, v.s2)
+		if got != v.cost {
+			t.Fatalf("%s: got %v, want %v", m, got, v.cost)
+		}
 		j.mw = 0
 	}
 

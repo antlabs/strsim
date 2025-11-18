@@ -1,7 +1,6 @@
 package strsim
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -29,6 +28,8 @@ func Test_ModifyString(t *testing.T) {
 		},
 	} {
 		modifyString(&o, &v.test)
-		assert.Equal(t, v.test, v.need)
+		if v.test != v.need {
+			t.Fatalf("modifyString: got %q, want %q", v.test, v.need)
+		}
 	}
 }
